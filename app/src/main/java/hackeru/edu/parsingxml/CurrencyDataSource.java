@@ -1,5 +1,8 @@
 package hackeru.edu.parsingxml;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /**
  * Created by hackeru on 05/06/2017.
  */
@@ -8,6 +11,26 @@ public class CurrencyDataSource {
 
     public static void getCurrencies(){
         //http://www.boi.org.il/currency.xml
+
+        //Java thread.
+        Thread t= new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        });
+        t.start();
+
+
+        //Option 2:
+        ExecutorService service = Executors.newSingleThreadExecutor();
+        service.execute(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        });
+        service.shutdown();
     }
 
     //inner class POJO
