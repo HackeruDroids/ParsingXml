@@ -13,18 +13,23 @@ import java.net.URLConnection;
 
 public class IO {
 
-    public static String readWebSite(String url) throws IOException{
+    public static String readWebSite(String url, String charset) throws IOException{
         URL address = new URL(url);
         URLConnection con = address.openConnection();
         InputStream in = con.getInputStream();
-        return getString(in);
+        return getString(in, charset);
     }
 
-    public static String getString(InputStream in) throws IOException {
+
+    public static String readWebSite(String url) throws IOException{
+        return readWebSite(url, "utf-8");
+    }
+
+    public static String getString(InputStream in, String charset) throws IOException {
         StringBuilder builder = new StringBuilder();
         String line = null;
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in, charset));
         try {
             while ((line = reader.readLine()) != null) {
                 builder.append(line);
@@ -34,5 +39,9 @@ public class IO {
             reader.close();
         }
         return builder.toString();
+    }
+
+    public static String getString(InputStream in) throws IOException {
+      return getString(in, "utf-8");
     }
 }

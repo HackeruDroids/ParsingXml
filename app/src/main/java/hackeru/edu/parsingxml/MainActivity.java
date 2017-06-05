@@ -80,15 +80,24 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_currencies) {
-            // Handle the camera action
-            getSupportFragmentManager().
-                    beginTransaction().
-                    replace(R.id.container, new CurrencyFragment()).
-                    commit();
-        }
-        else if (id == R.id.nav_share) {
-            Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show();
+        switch (id) {
+            case R.id.nav_currencies:
+                // Handle the Currencies action
+                getSupportFragmentManager().
+                        beginTransaction().
+                        replace(R.id.container, new CurrencyFragment()).
+                        commit();
+                break;
+            case R.id.nav_ynet:
+                // Handle the ynet action
+                getSupportFragmentManager().
+                        beginTransaction().
+                        replace(R.id.container, new YnetFragment()).
+                        commit();
+                break;
+            case R.id.nav_share:
+                Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show();
+                break;
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

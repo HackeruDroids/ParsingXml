@@ -23,9 +23,7 @@ public class CurrencyFragment extends Fragment implements CurrencyDataSource.OnC
         View v = inflater.inflate(R.layout.fragment_currency, container, false);
         //v.findViewById
 
-
         CurrencyDataSource.getCurrencies(this);
-
 
         return v;
     }
