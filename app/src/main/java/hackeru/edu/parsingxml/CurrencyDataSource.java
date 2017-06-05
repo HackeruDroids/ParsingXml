@@ -1,7 +1,10 @@
 package hackeru.edu.parsingxml;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import android.os.AsyncTask;
+import android.util.Log;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by hackeru on 05/06/2017.
@@ -11,26 +14,26 @@ public class CurrencyDataSource {
 
     public static void getCurrencies(){
         //http://www.boi.org.il/currency.xml
-
-        //Java thread.
-        Thread t= new Thread(new Runnable() {
+        AsyncTask<String, Integer, List<Currency>> asyncTask = new AsyncTask<String, Integer, List<Currency>>() {
             @Override
-            public void run() {
-
+            protected List<Currency> doInBackground(String... params) {
+                //code that runs in the background
+                try {
+                    String xml = IO.readWebSite("http://www.boi.org.il/currency.xml");
+                    Log.d("Hackeru", xml);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
             }
-        });
-        t.start();
 
-
-        //Option 2:
-        ExecutorService service = Executors.newSingleThreadExecutor();
-        service.execute(new Runnable() {
             @Override
-            public void run() {
-
+            protected void onPostExecute(List<Currency> currencies) {
+                //code that runs on the ui thread
             }
-        });
-        service.shutdown();
+        };
+
+        asyncTask.execute();
     }
 
     //inner class POJO

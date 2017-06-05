@@ -19,6 +19,12 @@ public class CurrencyFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_currency, container, false);
         //v.findViewById
+
+
+
+        CurrencyDataSource.getCurrencies();
+
+
         return v;
     }
 
