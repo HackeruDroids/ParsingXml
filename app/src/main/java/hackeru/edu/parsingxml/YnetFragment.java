@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -23,19 +24,21 @@ import java.util.List;
  */
 public class YnetFragment extends Fragment implements YnetDataSource.OnYnetArrivedListener {
     RecyclerView rvYnet;
-
+    ProgressBar progressBar;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_ynet, container, false);
         rvYnet = (RecyclerView) v.findViewById(R.id.rvYnet);
+        progressBar = (ProgressBar) v.findViewById(R.id.progressBar);
         YnetDataSource.getYnet(this);
         return v;
     }
 
     @Override
     public void onYnetArrived(List<YnetDataSource.Ynet> data) {
+        progressBar.setVisibility(View.GONE);
         if (data != null) {
             //1)rv.setLayoutManager
             rvYnet.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -105,6 +108,7 @@ public class YnetFragment extends Fragment implements YnetDataSource.OnYnetArriv
 
                     activity.getSupportFragmentManager().
                             beginTransaction().
+                            addToBackStack("ynet_list").
                             replace(R.id.container, YnetArticleFragment.newInstance(link)).
                             commit();
                 }

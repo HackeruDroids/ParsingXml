@@ -1,6 +1,7 @@
 package hackeru.edu.parsingxml;
 
 
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -49,11 +50,25 @@ public class YnetArticleFragment extends Fragment {
 
         webView.setWebViewClient(new WebViewClient(){
 
-            @SuppressWarnings("deprecation")
-            @Override
+             @SuppressWarnings("deprecation")
+             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 webView.loadUrl(url);
                 return true;
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                webView.animate().rotation(0);
+                webView.setBackgroundColor(0xfff);
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                webView.animate().rotation(360);
+                super.onPageStarted(view, url, favicon);
+                webView.setBackgroundColor(0x0f0);
             }
 
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
