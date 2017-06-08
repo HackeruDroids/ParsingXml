@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ParsingXml.iml" filepath="$PROJECT_DIR$/ParsingXml.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ParsingXmls.iml" filepath="$PROJECT_DIR$/ParsingXmls.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

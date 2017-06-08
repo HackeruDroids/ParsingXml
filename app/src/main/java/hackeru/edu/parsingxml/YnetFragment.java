@@ -31,4 +31,6 @@ public class YnetFragment extends Fragment implements YnetDataSource.OnYnetArriv
     public void onYnetArrived(List<YnetDataSource.Ynet> data) {
         Toast.makeText(getActivity(), data.toString(), Toast.LENGTH_SHORT).show();
     }
+
+
 }
