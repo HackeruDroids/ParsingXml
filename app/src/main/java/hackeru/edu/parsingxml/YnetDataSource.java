@@ -48,7 +48,7 @@ public class YnetDataSource {
         Document document = Jsoup.parse(xml);
         Elements elements = document.getElementsByTag("item");
         for (Element element : elements) {
-            String title = element.getElementsByTag("title").first().text().replace("<![CDATA", "").replace("]]>", "");
+            String title = element.getElementsByTag("title").first().text().replace("<![CDATA[", "").replace("]]>", "");
             String descriptionHTML = element.getElementsByTag("description").first().text();
             Document descriptionDocument = Jsoup.parse(descriptionHTML);
             String link = descriptionDocument.getElementsByTag("a").first().attr("href");
