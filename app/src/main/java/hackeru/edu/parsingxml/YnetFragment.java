@@ -4,6 +4,7 @@ package hackeru.edu.parsingxml;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -41,18 +44,30 @@ public class YnetFragment extends Fragment implements YnetDataSource.OnYnetArriv
         }
     }
 
-
     static class YnetAdapter extends RecyclerView.Adapter<YnetAdapter.YnetViewHolder> {
         //properties:
         List<YnetDataSource.Ynet> data;
         LayoutInflater inflater;
-        Context context;
 
+        Context context;
         //Constructor:
         public YnetAdapter(Context context, List<YnetDataSource.Ynet> data) {
             this.data = data;
             this.context = context;
             this.inflater = LayoutInflater.from(context); //Got the inflater from the Context.
+        }
+
+        @Override
+        public void onBindViewHolder(YnetViewHolder holder, int position) {
+            YnetDataSource.Ynet ynet = data.get(position);
+            holder.tvTitle.setText(ynet.getTitle());
+            holder.tvDescription.setText(ynet.getContent());
+
+            Picasso.with(context).
+                    load(ynet.getThumbnail()).
+                    placeholder(R.drawable.placeholder).
+                    error(R.drawable.news).
+                    into(holder.ivThumbnail);
         }
 
         @Override
@@ -62,19 +77,11 @@ public class YnetFragment extends Fragment implements YnetDataSource.OnYnetArriv
         }
 
         @Override
-        public void onBindViewHolder(YnetViewHolder holder, int position) {
-            YnetDataSource.Ynet ynet = data.get(position);
-            holder.tvTitle.setText(ynet.getTitle());
-            holder.tvDescription.setText(ynet.getContent());
-            //TODO: Get the images from the thumbnailUrl
-        }
-
-        @Override
         public int getItemCount() {
             return data.size();
         }
 
-        class YnetViewHolder extends RecyclerView.ViewHolder {
+        class YnetViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
             TextView tvTitle;
             TextView tvDescription;
             ImageView ivThumbnail;
@@ -84,6 +91,23 @@ public class YnetFragment extends Fragment implements YnetDataSource.OnYnetArriv
                 tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
                 tvDescription = (TextView) itemView.findViewById(R.id.tvDescription);
                 ivThumbnail = (ImageView) itemView.findViewById(R.id.ivThumbnail);
+
+                itemView.setOnClickListener(this);
+            }
+
+            @Override
+            public void onClick(View v) {
+                int position = getAdapterPosition();
+                String link = data.get(position).getLink();
+
+                if (context instanceof FragmentActivity){
+                    FragmentActivity activity = (FragmentActivity) context;
+
+                    activity.getSupportFragmentManager().
+                            beginTransaction().
+                            replace(R.id.container, YnetArticleFragment.newInstance(link)).
+                            commit();
+                }
             }
         }
     }
